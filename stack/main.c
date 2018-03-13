@@ -6,10 +6,11 @@ int main()
 {
     printf("Hello world!\n");
     int x=9;
-    char c;
-    c= (char)x;
+    char c[10]="3+(2-3)";
+    char s[10];
+    convert(c,s);
+    printf("%s",s);
 
-    printf("%c",c);
 
     return 0;
 }

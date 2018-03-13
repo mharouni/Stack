@@ -86,15 +86,11 @@ int top (stack *s)
         exit(1);
     }
 }
-char topc() (stack *s)
+char topc (stack *s)
 {
     if (!isEmty(s))
         return s->op[s->top];
-    else
-    {
-        printf("\nUnderflow\n");
-        exit(1);
-    }
+
 }
 int eval(char c[] )
 {
@@ -173,90 +169,48 @@ int eval(char c[] )
     }
     return pop(&s);
 }
+int priority(char x)
+{
+    if(x == '(')
+        return 0;
+    if(x == '+' || x == '-')
+        return 1;
+    if(x == '*' || x == '/')
+        return 2;
+}
 void convert(char in[], char post[])
 {
-    stack s;
-    int i;
-    initializestack(&s);
-    int prec(char ch)
+    stack stack;
+    initializestack(&stack);
+    char *e, x;
+    post[0]= '\0';
+    e = in;
+    while(*e != '\0')
     {
-        if (ch =='+')
-            return 1;
-        else if ( ch == '-')
-            return 1;
-        else if (ch == '/')
-            return 2;
-        else if (ch == '*')
-            return 2;
-            else return 0;
-        }
-    for(i = 0; in[i] != '\0'; ++i)
-    {
-               switch(in[i])
-       {
-
-
-            case '1':
-                strcat(post,'1');
-                break;
-            case '2':
-                strcat(post,'2');
-                break;
-            case '3':
-                strcat(post,'3');
-                break;
-            case '4':
-                strcat(post,'4');
-                break;
-            case '5':
-                strcat(post,'5');
-                break;
-            case '6':
-                strcat(post,'6');
-                break;
-            case '7':
-                strcat(post,'7');
-                break;
-            case '8':
-                strcat(post,'8');
-                break;
-            case '9':
-                strcat(post,'9');
-                break;
-            case '+':
-                while(!isEmty(&s))
-                {
-                    strcat(post,popc(&s));
-                }
-                pushc(&s,'+');
-                break;
-
-            case '-':
-                while(!isEmty(&s))
-                {
-                    strcat(post,popc(&s));
-                }
-                pushc(&s,'+');
-                break;
-            case '/':
-                if(prec(top(&s)) > 1)
-                    strcat(post,pop(&s));
-                pushc(&s,'/');
-                break;
-            case '*':
-                if(prec(top(&s)) > 1)
-                    strcat(post,pop(&s));
-                pushc(&s,'*');
-                break;
-            default :
-
-                break;
-       }
-
-        while(!isEmty(&s))
+        if(isalnum(*e))
+           printf("%c",*e);
+         //  strcat(post,*e);
+        else if(*e == '(')
+            pushc(&stack,*e);
+        else if(*e == ')')
         {
-            strcat(post,popc(&s));
+            while((x = topc(&stack)) != '(' && !isEmty(&stack));
+                printf("%c",x);
+              // strcat(post, popc(&stack));
         }
-
+        else
+        {
+            while((priority(topc(&stack)) >= priority(*e)) && !isEmty(&stack))
+                printf("%c",popc(&stack));
+                //strcat(post,popc(&stack));
+            pushc(&stack,*e);
+        }
+        e++;
+    }
+    while(!isEmty(&stack))
+    {
+        printf("%c",popc(&stack));
+       // strcat(post,popc(&stack));
     }
 }
+

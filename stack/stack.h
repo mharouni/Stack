@@ -20,6 +20,7 @@ void convert(char in[], char post[]);
 char popc(stack *s);
 void pushc (stack*s, char val);
 char topc (stack *s);
+int priority(char x);
 
 
 

@@ -171,46 +171,68 @@ int eval(char c[] )
 }
 int priority(char x)
 {
-    if(x == '(')
-        return 0;
+
     if(x == '+' || x == '-')
         return 1;
     if(x == '*' || x == '/')
         return 2;
+        else return 0;
 }
 void convert(char in[], char post[])
 {
     stack stack;
     initializestack(&stack);
-    char *e, x;
-    post[0]= '\0';
-    e = in;
-    while(*e != '\0')
+    int i,j=0 ;
+    for (i=0;i<strlen(in);i++)
     {
-        if(isalnum(*e))
-           printf("%c",*e);
-         //  strcat(post,*e);
-        else if(*e == '(')
-            pushc(&stack,*e);
-        else if(*e == ')')
+        if (isalnum(in[i]))
         {
-            while((x = topc(&stack)) != '(' && !isEmty(&stack));
-                printf("%c",x);
-              // strcat(post, popc(&stack));
+
+            post[j]=in[i];
+            j++;
         }
-        else
+        else if (in[i]== '+' || in[i] == '-' || in[i] == '*' || in[i] == '/')
         {
-            while((priority(topc(&stack)) >= priority(*e)) && !isEmty(&stack))
-                printf("%c",popc(&stack));
-                //strcat(post,popc(&stack));
-            pushc(&stack,*e);
+
+
+
+            while (priority(topc(&stack)) >= priority(in[i]))
+            {
+                post[j]=popc(&stack);
+                j++;
+            }
+
+            pushc(&stack, in[i]);
         }
-        e++;
+
+
+        else if (in[i]== '(')
+        {
+             pushc(&stack,'(');
+        }
+
+             else if (in[i] == ')')
+
+             {
+
+             while (!isEmty(&stack) && topc(&stack) != '(' )
+             {
+
+                 post[j]= popc(&stack);
+                 j++;
+             }
+             char m;
+                m=popc(&stack);
+             }
+
     }
     while(!isEmty(&stack))
     {
-        printf("%c",popc(&stack));
-       // strcat(post,popc(&stack));
+        char y;
+        y=popc(&stack);
+        post[j]=y;
+        j++;
     }
+    post[j]='\0';
 }
 

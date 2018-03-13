@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1520911076 source:c:\users\toshoba\desktop\sparse matrix\stack\main.c
+	<stdio.h>
+	<stdlib.h>
+	"stack.h"
+	"stack.c"
+
+1520911501 c:\users\toshoba\desktop\sparse matrix\stack\stack.h
+
+1520911821 c:\users\toshoba\desktop\sparse matrix\stack\stack.c
+	"stack.h"
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+
